@@ -1,0 +1,44 @@
+{
+  "name": "scpi",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "name": "zlib",
+      "version>=": "1.2.12"
+    },
+    {
+      "name": "poco",
+      "version>=": "1.11.2"
+    },
+    {
+      "name": "catch2",
+      "version>=": "3.0.1"
+    },
+    {
+      "name": "czmq",
+      "version>=": "4.2.1"
+    },
+    {
+      "name": "cppzmq",
+      "version>=": "4.8.1"
+    },
+    {
+      "name": "gflags",
+      "version>=": "2.2.2"
+    },
+    {
+      "name": "openssl",
+      "version>=": "3.0.5#1"
+    },
+    {
+      "name": "pugixml",
+      "version>=": "1.12.1#1"
+    },
+    {
+      "name": "rttr",
+      "version>=": "0.9.6#4"
+    }
+
+  ],
+  "builtin-baseline": "42cc830d874f8e24eb4eb05bd5bb28496e3d498c"
+}

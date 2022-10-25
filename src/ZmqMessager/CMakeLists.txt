@@ -1,0 +1,6 @@
+set(utility_library_name "ZmqMessager")
+file(GLOB ZmqMessager_SRCS "*.cpp")
+file(GLOB ZmqMessager_HEAD "*.h")
+set(ZMQ_CPP11)
+add_library(${utility_library_name} STATIC ${ZmqMessager_HEAD} ${ZmqMessager_SRCS})
+target_link_libraries(${utility_library_name} czmq  WS2_32 gflags)
