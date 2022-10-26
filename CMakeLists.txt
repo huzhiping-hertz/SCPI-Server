@@ -33,7 +33,7 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/${VERSION})
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/src)
 #项目源码
 add_subdirectory(src/ZmqMessager)
-#add_subdirectory(src/DomainModel)
+add_subdirectory(src/DomainModel)
 #add_subdirectory(src/CommonUtility)
 add_subdirectory(src/ScpiServer)
 add_subdirectory(src/UnitTest)
