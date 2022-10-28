@@ -5,23 +5,30 @@
 #include "DomainModel/CmdAction.h"
 #include <rttr/type>
 #include "CommonUtility/Loger.h"
-
+#include <Poco/Net/ICMPClient.h>
 /*
 How to run:
 ScpiServer --flagfile=config.flags
 */
 DEFINE_string(zmq_address, "tcp://127.0.0.1:6666", "zmq address");
-DEFINE_string(server_address, "5025", "default scpi server port");
+DEFINE_string(scpi_server_port, "5025", "default scpi server port");
 
 using namespace std; 
 using namespace HZP;
 using namespace rttr;
 
+using Poco::Net::ICMPClient;
+using Poco::Net::IPAddress;
 
 int main()
 {
     Loger::Init();
     Loger::Write("scpi server start...");
+    Loger::Write("scpi server port:"+FLAGS_scpi_server_port);
+
+    ICMPClient icmp(IPAddress::IPv4);
+    int rs=icmp.ping("172.25.65.247");
+    cout << rs << endl;
 
     string device = "CMW";
 
