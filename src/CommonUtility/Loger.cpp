@@ -1,17 +1,11 @@
 #include "Loger.h"
 
+using namespace HZP;
+using namespace std;
 
-namespace RS
-{
-	using namespace std;
+//Loger::constructor Loger::cons;
 
-	Loger::Loger()
-	{
-	}
-
-
-	Loger::~Loger()
-	{
-
-	}
-}
+//void Loger::Write(string msg)
+//{
+//	//m_logger->information(msg);
+//}

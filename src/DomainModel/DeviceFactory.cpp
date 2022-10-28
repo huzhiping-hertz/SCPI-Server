@@ -7,7 +7,7 @@ namespace HZP
 	{
 		if (deviceType == "CMW")
 		{
-			make_shared<DeviceCMW>();
+			return make_shared<DeviceCMW>();
 		}
 		return make_shared<DeviceBase>();
 	}

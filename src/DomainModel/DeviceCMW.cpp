@@ -1,5 +1,8 @@
 #include "DeviceCMW.h"
+#include "Poco/Logger.h"
+#include "CommonUtility/Loger.h"
 
+using Poco::Logger;
 using namespace HZP;
 
 DeviceCMW::DeviceCMW()
@@ -10,7 +13,8 @@ DeviceCMW::~DeviceCMW()
 }
 CmdResult DeviceCMW::IDN()
 {
-	return CmdResult("1","Rohde&Schwarz CMW");
+	Loger::Write("IDN");
+	return CmdResult(1,"Rohde&Schwarz CMW");
 }
 CmdResult DeviceCMW::CLS()
 {
@@ -18,5 +22,5 @@ CmdResult DeviceCMW::CLS()
 }
 CmdResult DeviceCMW::PSC(vector<string>parameters)
 {
-	return CmdResult::UnRealizeCmd();
+	return CmdResult(1, "Run PSC Cmd CMW");
 }

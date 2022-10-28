@@ -4,6 +4,8 @@
 #include <vector>
 #include "DomainModel/CmdAction.h"
 #include <rttr/type>
+#include "CommonUtility/Loger.h"
+
 /*
 How to run:
 ScpiServer --flagfile=config.flags
@@ -15,21 +17,28 @@ using namespace std;
 using namespace HZP;
 using namespace rttr;
 
+
 int main()
 {
-    type t = type::get_by_name("CmdAction");
-    variant var = t.create({"CMW"});
+    Loger::Init();
+    Loger::Write("scpi server start...");
 
-    method meth = t.get_method("IDN");
-    meth.invoke(var);
+    string device = "CMW";
 
+    std::shared_ptr<CmdAction> ptrCmdAction = std::make_shared<CmdAction>(device);
+    type cmdActionType=type::get_by_name("CmdAction");
+    
+
+    string cmd = "IDN";
+    variant rsObj = cmdActionType.get_method(cmd).invoke(ptrCmdAction);
+    cout << rsObj.get_value<CmdResult>().GetResult() << endl;;
+ 
+    cmd = "PSC";
     vector<string> params;
     params.push_back("hello");
     params.push_back("reflection");
-    method testMeth = t.get_method("PSC");
-    testMeth.invoke(var, params);
-
-    //std::cout << var.get_type().get_name(); // prints 'MyStruct'
+    rsObj = cmdActionType.get_method(cmd).invoke(ptrCmdAction, params);
+    cout << rsObj.get_value<CmdResult>().GetResult() << endl;;
 
 	return 0; 
 }
