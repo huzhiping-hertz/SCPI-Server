@@ -1,0 +1,97 @@
+# ScpiExample.txt
+# SCPI command must has "Syntax:" key word. "Description:" and "Example:" are optional.
+ 
+# An example of SCPI command with description and examples.
+Syntax: READ?
+Description: This command changes the instrument's triggering system from the "idle" state to the "wait-for-trigger" state. Measurements will begin when the specified trigger conditions are satisfied following the receipt of the READ? command. Readings are then sent immediately to volatile memory and the instrument's output buffer.
+Example:  
+CONF:VOLT:DC 10,0.003
+TRIG:SOUR EXT
+READ?
+                                
+# An example of SCPI command with optional keyword.                         
+Syntax: CALibration[:ALL]?
+Description: This command performs a calibration of the multimeter using the specified calibration value (CALibration:VALue command). Before you can calibrate the instrument, you must unsecure it by entering the correct security code.
+Example: CAL?
+ 
+# An example of SCPI command with suffix, suffix is [1|2|3|4].
+Syntax: OUTPut:ALARm[1|2|3|4]:CLEar
+Description: Clear the specified alarm output lines.
+ 
+# An example of SCPI command with suffix, suffix is <1-7>.
+Syntax: 
+[SOURce:]DIGital:PIN<1-7>:FUNCtion {<function>|DIO | DINPut | TOUTput | TINPut | FAULt | INHibit | ONCouple | OFFCouple}
+[SOURce:]DIGital:PIN<1-7>:FUNCtion?
+Description:  
+This command sets the functions of the digital port pins.
+Example:
+DIG:PIN1:FUNC FAUL
+DIG:PIN7:FUNC?
+ 
+# An example of SCPI command with suffix, suffix is [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19].
+Syntax: 
+[:SOURce]:MARKer[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19][:STATe] {ON|OFF|1|0}
+[:SOURce]:MARKer[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19][:STATe]?
+Description: 
+This command turns a marker on or off. Marker 0 is the default if the marker designator [n] is not specified.
+MARKer has suffix [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+Example:
+SOURce:MARKer0:STATe ON
+SOURce:MARKer0:STATe?
+                
+# An example of SCPI command with Numeric Parameters.
+Syntax: CONFigure[:VOLTage]:AC [{<range>|AUTO|MIN|MAX|DEF} [,{<resolution>|MIN|MAX|DEF}]] 
+Description: First, this command resets all ac voltage measurement parameters and trigger parameters to their default values. Then, it configures the meter for ac voltage measurements but does not initiate the measurement. 
+Example: 
+CONF:VOLT:AC 
+READ? 
+                                  
+# An example of SCPI command with Discrete Parameters
+Syntax: CALCulate:FUNCtion {NULL | DB | DBM | AVERage | LIMit}
+CALCulate:FUNCtion? 
+Description: This command selects the calculation function to be used. The default function is NULL.
+Example: 
+CALC:FUNC DBM
+CALC:FUNC? 
+ 
+# An example of SCPI command with Boolean Parameters                       
+Syntax: TRIGger:DELay:AUTO {OFF|0|ON|1}
+TRIGger:DELay:AUTO?
+Description: This command disables or enables an automatic trigger delay. If enabled, the instrument determines the delay based on function, range, and integration time or bandwidth.
+Example: 
+TRIG:DEL:AUTO ON
+TRIG:DEL:AUTO?
+ 
+# An example of SCPI command with ASCII String Parameters
+Syntax:
+DISPlay[:WINDow[{1|2}]]:TEXT[:DATA] <String>
+DISPlay[:WINDow[{1|2}]]:TEXT[:DATA]?
+Description:
+This command displays a text message on the top line ("WINDow1") or bottom line ("WINDow2") of the instrument's front-panel display. The top line ("WINDow1") is the default. The instrument can display up to 12 (top line) or 18 (bottom line) characters on the front panel; any additional characters are truncated (no error is generated). 
+Example:
+DISP:WIND2:TEXT "WAITING FOR DATA..."
+DISP:WIND2:TEXT?
+ 
+# An example of SCPI command with fixed String Parameters                                  
+Syntax: DATA:COPY NVMEM, RDG_STORE
+Description: This command copies the readings in reading memory (RDG_STORE) into non-volatile memory (NVMEM). Non-volatile memory is not erased by a power-down cycle.
+Example: 
+DATA:COPY NVMEM, RDG_STORE
+ 
+# An example of SCPI command with Integer Parameters
+Syntax: DATA:REMove? <Integer>
+Description: This command reads and erases the specified number of readings from memory. The readings are erased from memory starting with the oldest reading first. The purpose of this command is to allow you to periodically remove readings from memory during a series of measurements to avoid a reading memory overflow.  
+Example: 
+DATA:REM? 3
+ 
+# An example of SCPI command with channel list. chanlist, channel, ch_list and scan_list are identic
+Syntax: 
+[SENSe:]COUNter:TOTalize:IVALue? (@<ch_list>)
+Description: 
+The query command returns a numeric value representing the initial counter value of the general purpose digital counter. Multiple responses are separated by comma.
+ 
+# An example of SCPI command with optional parameters
+Syntax: 
+APPLy:RAMP [<frequency> [,<amplitude> [,<offset>] ]]
+Description: 
+Output a ramp wave with the specified frequency, amplitude, and dc offset. This command overrides the current symmetry setting and automatically selects 100%. The waveform is output as soon as the command is executed.

@@ -1,0 +1,802 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ScpiDefinition xmlns="http://www.agilent.com/schemas/SCPIDL/2008" documentVersion="1.0" schemaVersion="1.1" friendlyName="AGxxx">
+  <Source>
+    <StandAloneDocument providerName="Agilent" creationDate="10/29/2022" />
+  </Source>
+  <SupportedInstrument Manufacturer="Agilent" Model="AGxxx" FirmwareLevel="1.0" />
+  <GlobalDefinitions>
+    <Enum name="Boolean" langTypeName="OnOff">
+      <Member mnemonic="ON" langMemberName="On" value="1" />
+      <Member mnemonic="OFF" langMemberName="Off" value="0" />
+    </Enum>
+    <ParameterType name="Boolean">
+      <DecimalNumeric />
+      <Character>
+        <EnumRef name="Boolean" />
+      </Character>
+    </ParameterType>
+    <ResponseType name="Boolean">
+      <NR1Numeric>
+        <EnumRef name="Boolean" />
+      </NR1Numeric>
+    </ResponseType>
+    <Enum name="TriggerSource" langTypeName="TriggerSource" description="Identifies the trigger source of the channels.">
+      <Member mnemonic="INTernal" langMemberName="Internal" value="0" />
+      <Member mnemonic="EXTernal" langMemberName="External" value="1" />
+    </Enum>
+    <ParamRespType name="TriggerSource">
+      <Character>
+        <EnumRef name="TriggerSource" />
+      </Character>
+    </ParamRespType>
+    <BlockElements name="WaveformBinblockElements">
+      <Element format="BinaryLittleEndian" type="SByte" condition="When :WAVEFORM:FORMAT set to BYTE. -1 represents data hole, valid data range 0-127." />
+      <Element format="BinaryLittleEndian" type="Byte" condition="When :WAVEFORM:FORMAT set to COMPRESSED. 255 represents data hole, 255 value mapped to 254." />
+      <Element format="BinaryLittleEndian" type="Int16" condition="When :WAVEFORM:FORMAT set to WORD. -1 represents data hole, valid data range 0-32640." />
+      <Element format="Ascii" type="Int16" condition="When :WAVEFORM:FORMAT set to ASCII. -1 represents data hole, valid data range 0-32640.">
+        <EnumRef name="MinMax" />
+      </Element>
+    </BlockElements>
+    <ParameterType name="WaveformBlock">
+      <ArbitraryBlock>
+        <BlockElementsRef name="WaveformBinblockElements" />
+      </ArbitraryBlock>
+    </ParameterType>
+    <ResponseType name="WaveformBlock">
+      <DefiniteLengthArbitraryBlock>
+        <BlockElementsRef name="WaveformBinblockElements" />
+      </DefiniteLengthArbitraryBlock>
+    </ResponseType>
+    <Enum name="MinMax" langTypeName="MinMax">
+      <Member mnemonic="MINimum" langMemberName="Minimum" />
+      <Member mnemonic="MAXimum" langMemberName="Maximum" />
+    </Enum>
+    <Enum name="MinMaxDef" langTypeName="MinMaxDef">
+      <Member mnemonic="DEFault" langMemberName="Default" description="Sets the value to its default" value="1" />
+      <Member mnemonic="MINimum" langMemberName="Minimum" />
+      <Member mnemonic="MAXimum" langMemberName="Maximum" />
+    </Enum>
+    <Enum name="MinMaxDefInf" langTypeName="MinMaxDefInf">
+      <Member mnemonic="DEFault" langMemberName="Default" />
+      <Member mnemonic="MINimum" langMemberName="Minimum" />
+      <Member mnemonic="MAXimum" langMemberName="Maximum" />
+      <Member mnemonic="INFinity" langMemberName="Infinity" />
+      <Member mnemonic="NINFinity" langMemberName="NegativeInfinity" />
+      <Member mnemonic="NAN" langMemberName="NotANumber" />
+    </Enum>
+    <Enum name="MinMaxDefInfStep" langTypeName="MinMaxDefInfStep">
+      <Member mnemonic="DEFault" langMemberName="Default" />
+      <Member mnemonic="MINimum" langMemberName="Minimum" />
+      <Member mnemonic="MAXimum" langMemberName="Maximum" />
+      <Member mnemonic="INFinity" langMemberName="Infinity" />
+      <Member mnemonic="NINFinity" langMemberName="NegativeInfinity" />
+      <Member mnemonic="NAN" langMemberName="NotANumber" />
+      <Member mnemonic="UP" langMemberName="Up" />
+      <Member mnemonic="DOWN" langMemberName="Down" />
+    </Enum>
+    <Enum name="DisplayPersistence" langTypeName="DisplayPersistence">
+      <Member mnemonic="INFinite" aliases="MAX" langMemberName="Infinite" />
+      <Member mnemonic="SINGle" aliases="MIN" langMemberName="Single" description="Sets the persistence value to minimum." />
+    </Enum>
+    <Enum name="WaveformFormat" langTypeName="TriggerSource" description="Identifies the trigger source of the channels.">
+      <Member mnemonic="ASCII" langMemberName="Ascii" />
+      <Member mnemonic="BYTE" langMemberName="Byte" />
+      <Member mnemonic="WORD" langMemberName="Word" />
+      <Member mnemonic="COMPressed" langMemberName="Compressed" />
+    </Enum>
+    <ParameterType name="JoesBoolean">
+      <NonDecimalNumeric />
+      <!-- Do we need to declare valid return values for DN e.g. 0 and 1? -->
+      <DecimalNumeric />
+      <Character>
+        <EnumRef name="Boolean" />
+      </Character>
+    </ParameterType>
+    <ParameterType name="Voltage">
+      <DecimalNumeric>
+        <Suffix>
+          <StandardSuffix unit="V" allowMultiplier="true" />
+        </Suffix>
+      </DecimalNumeric>
+      <Character>
+        <EnumRef name="MinMaxDef" />
+      </Character>
+    </ParameterType>
+    <ParameterType name="Frequency">
+      <DecimalNumeric>
+        <Suffix>
+          <StandardSuffix unit="HZ" allowMultiplier="true" />
+        </Suffix>
+      </DecimalNumeric>
+      <Character>
+        <EnumRef name="MinMaxDef" />
+      </Character>
+    </ParameterType>
+    <ParameterType name="FrequencyMHZ">
+      <DecimalNumeric>
+        <Suffix>
+          <StandardSuffix unit="MHZ" allowMultiplier="false" />
+        </Suffix>
+      </DecimalNumeric>
+      <Character>
+        <EnumRef name="MinMaxDef" />
+      </Character>
+    </ParameterType>
+    <Enum name="A" langMemberName="A">
+      <Member mnemonic="An" langMemberName="An" />
+    </Enum>
+    <Enum name="Example" langMemberName="Example">
+      <Member mnemonic="example" langMemberName="Example" />
+    </Enum>
+    <Enum name="Scpi" langMemberName="Scpi">
+      <Member mnemonic="SCPI" langMemberName="Scpi" />
+    </Enum>
+    <Enum name="DioDinpToutTinpFaulInhOncOffc" langMemberName="DioDinpToutTinpFaulInhOncOffc">
+      <Member mnemonic="DIO" langMemberName="Dio" />
+      <Member mnemonic="DINPut" langMemberName="Dinput" />
+      <Member mnemonic="TOUTput" langMemberName="Toutput" />
+      <Member mnemonic="TINPut" langMemberName="Tinput" />
+      <Member mnemonic="FAULt" langMemberName="Fault" />
+      <Member mnemonic="INHibit" langMemberName="Inhibit" />
+      <Member mnemonic="ONCouple" langMemberName="Oncouple" />
+      <Member mnemonic="OFFCouple" langMemberName="Offcouple" />
+    </Enum>
+    <Enum name="OnOff10" langMemberName="OnOff10">
+      <Member mnemonic="ON" langMemberName="On" />
+      <Member mnemonic="OFF" langMemberName="Off" />
+      <Member mnemonic="1" langMemberName="1" />
+      <Member mnemonic="0" langMemberName="0" />
+    </Enum>
+    <Enum name="AutoMinMaxDef" langMemberName="AutoMinMaxDef">
+      <Member mnemonic="AUTO" langMemberName="Auto" />
+      <Member mnemonic="MIN" langMemberName="Min" />
+      <Member mnemonic="MAX" langMemberName="Max" />
+      <Member mnemonic="DEF" langMemberName="Def" />
+    </Enum>
+    <Enum name="NullDbDbmAverLim" langMemberName="NullDbDbmAverLim">
+      <Member mnemonic="NULL" langMemberName="Null" />
+      <Member mnemonic="DB" langMemberName="Db" />
+      <Member mnemonic="DBM" langMemberName="Dbm" />
+      <Member mnemonic="AVERage" langMemberName="Average" />
+      <Member mnemonic="LIMit" langMemberName="Limit" />
+    </Enum>
+    <Enum name="Nvmem" langMemberName="Nvmem">
+      <Member mnemonic="NVMEM" langMemberName="Nvmem" />
+    </Enum>
+    <Enum name="Rdg_store" langMemberName="Rdg_store">
+      <Member mnemonic="RDG_STORE" langMemberName="Rdg_store" />
+    </Enum>
+  </GlobalDefinitions>
+  <CommonCommands>
+    <CommonCommand mnemonic="CLS" commandForm="CommandOnly">
+      <Synopsis>Clear the Status Byte summary register and all event registers.</Synopsis>
+      <Remarks>
+      </Remarks>
+      <Examples>
+        <Example targetCommandForm="CommandOnly">
+          *CLS
+        </Example>
+      </Examples>
+    </CommonCommand>
+    <CommonCommand mnemonic="ESE" commandForm="CommandAndQuery">
+      <Synopsis>Enables bits in the Standard Event enable register.</Synopsis>
+      <Remarks>The selected bits are then reported to the Status Byte.</Remarks>
+      <Examples>
+        <Example targetCommandForm="CommandOnly">
+          *ESE 16
+        </Example>
+        <Example targetCommandForm="QueryOnly">
+          *ESE?
+        </Example>
+      </Examples>
+      <CommandSyntaxes>
+        <CommandSyntax condition="When the first parameter is 1 this syntax is valid.">
+          <Parameters>
+            <Parameter name="value" semanticType="Integer">
+              <DecimalNumeric />
+            </Parameter>
+          </Parameters>
+        </CommandSyntax>
+      </CommandSyntaxes>
+      <QuerySyntaxes>
+        <QuerySyntax>
+          <Responses>
+            <Response name="value" semanticType="Integer">
+              <NR1Numeric />
+            </Response>
+          </Responses>
+        </QuerySyntax>
+      </QuerySyntaxes>
+    </CommonCommand>
+    <CommonCommand mnemonic="IDN" commandForm="QueryOnly">
+      <Synopsis>Returns a four field instrument identifier string.  field 1 typically contains the manufacturer name, field 2 contains the model name, field 4 contains the firmware revision(s).</Synopsis>
+      <Remarks>
+      </Remarks>
+      <Examples>
+        <Example targetCommandForm="QueryOnly">
+          *IDN?
+        </Example>
+      </Examples>
+      <QuerySyntaxes>
+        <QuerySyntax>
+          <Responses>
+            <Response name="value" semanticType="String">
+              <NR1Numeric />
+            </Response>
+          </Responses>
+        </QuerySyntax>
+      </QuerySyntaxes>
+    </CommonCommand>
+    <CommonCommand mnemonic="OPC" commandForm="CommandAndQuery">
+      <Synopsis>Sets the "operation complete" bit (bit 0) in the Standard Event register after the command is executed.</Synopsis>
+      <Remarks>
+        A device is in the Operation Complete Command Active State (OCAS) after it has executed *OPC. The Device returns to the Operation Complete Command Idle State (OCIS) whenever the No Operation Pending flag is TRUE, at the same time setting the OPC bit of the SESR TRUE. The following events for the device into OCIS without setting the No Operation Pending flag TRUE and without setting the OPC bit of the SESR:
+        * power on
+        * receipt of the dcas message (device clear)
+        * execution of *CLS
+        * execution of *RST
+
+        Implementation of the *OPC and *WAI commands is straightforward in devices which implement only sequential commands. When executing *OPC the device simply sets the OPC bit of SESR. Executing *WAI is a no-operation. The device is, in effect, always in OCIS.
+      </Remarks>
+      <Examples>
+        <Example targetCommandForm="CommandOnly">
+          *OPC
+        </Example>
+        <Example targetCommandForm="QueryOnly">
+          *OPC?
+        </Example>
+      </Examples>
+      <QuerySyntaxes>
+        <QuerySyntax>
+          <Responses>
+            <Response name="value" semanticType="Integer">
+              <NR1Numeric />
+            </Response>
+          </Responses>
+        </QuerySyntax>
+      </QuerySyntaxes>
+    </CommonCommand>
+    <CommonCommand mnemonic="RST" commandForm="CommandOnly">
+      <Synopsis>Resets the instrument.</Synopsis>
+      <Remarks>
+      </Remarks>
+      <Examples>
+        <Example targetCommandForm="CommandOnly">
+          *RST
+        </Example>
+      </Examples>
+    </CommonCommand>
+    <CommonCommand mnemonic="SRE" commandForm="CommandAndQuery">
+      <Synopsis>Enable bits in the Status Byte enable register.</Synopsis>
+      <Remarks>
+      </Remarks>
+      <Examples>
+        <Example targetCommandForm="CommandOnly">
+          *SRE 16
+        </Example>
+        <Example targetCommandForm="QueryOnly">
+          *SRE?
+        </Example>
+      </Examples>
+      <CommandSyntaxes>
+        <CommandSyntax>
+          <Parameters>
+            <Parameter name="value" semanticType="NonDecimalNumeric" description="enableValue is ...">
+              <DecimalNumeric />
+            </Parameter>
+          </Parameters>
+        </CommandSyntax>
+      </CommandSyntaxes>
+      <QuerySyntaxes>
+        <QuerySyntax>
+          <Responses>
+            <Response name="value" semanticType="Integer" description="Query the Status Byte enable register.">
+              <NR1Numeric />
+            </Response>
+          </Responses>
+        </QuerySyntax>
+      </QuerySyntaxes>
+    </CommonCommand>
+    <CommonCommand mnemonic="STB" commandForm="QueryOnly">
+      <Synopsis>Read Status Byte Query</Synopsis>
+      <Remarks>
+      </Remarks>
+      <Examples>
+        <Example targetCommandForm="QueryOnly">
+          *STB?
+        </Example>
+      </Examples>
+      <QuerySyntaxes>
+        <QuerySyntax>
+          <Responses>
+            <Response name="value" semanticType="Integer">
+              <NR1Numeric />
+            </Response>
+          </Responses>
+        </QuerySyntax>
+      </QuerySyntaxes>
+    </CommonCommand>
+    <CommonCommand mnemonic="TST" commandForm="QueryOnly">
+      <Synopsis>Self-Test query.</Synopsis>
+      <Remarks>
+      </Remarks>
+      <Examples>
+        <Example targetCommandForm="QueryOnly">
+          *TST?
+        </Example>
+      </Examples>
+      <QuerySyntaxes>
+        <QuerySyntax>
+          <Responses>
+            <Response name="value" semanticType="Integer">
+              <NR1Numeric />
+            </Response>
+          </Responses>
+        </QuerySyntax>
+      </QuerySyntaxes>
+    </CommonCommand>
+    <CommonCommand mnemonic="WAI" commandForm="CommandOnly">
+      <Synopsis>Wait-to-Continue command.</Synopsis>
+      <Remarks>
+      </Remarks>
+      <Examples>
+        <Example targetCommandForm="CommandOnly">
+          *WAI
+        </Example>
+      </Examples>
+    </CommonCommand>
+    <CommonCommand mnemonic="PSC" commandForm="CommandAndQuery">
+      <Synopsis>
+        Power-on status clear. Clear the Status Byte and Standard Event
+        register enable masks when power is turned on (*PSC 1). When *PSC 0
+        is in effect, the Status Byte and Standard Event register enable masks
+        are not cleared when power is turned on. [Stored in non-volatile memory]
+      </Synopsis>
+      <Remarks>
+      </Remarks>
+      <Examples>
+        <Example targetCommandForm="CommandOnly" targetLanguage="VEE">
+          *PSC 0
+        </Example>
+      </Examples>
+      <CommandSyntaxes>
+        <CommandSyntax>
+          <Parameters>
+            <Parameter name="value" semanticType="DecimalNumericc" description="The common values are 0 to disable and non-zero to enable.">
+              <DecimalNumeric />
+            </Parameter>
+          </Parameters>
+        </CommandSyntax>
+      </CommandSyntaxes>
+      <QuerySyntaxes>
+        <QuerySyntax>
+          <Responses>
+            <Response name="value" semanticType="Integer" description="Query the power-on status clear setting. Returns &quot;0&quot; (*PSC 0) or &quot;1&quot; (*PSC 1).">
+              <NR1Numeric />
+            </Response>
+          </Responses>
+        </QuerySyntax>
+      </QuerySyntaxes>
+    </CommonCommand>
+  </CommonCommands>
+  <SubsystemCommands>
+    <RootNode mnemonic="">
+      <SubsystemCommand commandForm="CommandAndQuery">
+        <Synopsis>
+        </Synopsis>
+        <Remarks />
+        <Examples />
+        <CommandSyntaxes>
+          <CommandSyntax>
+            <Parameters>
+              <Parameter name="parameter" semanticType="Enum">
+                <Character>
+                  <EnumRef name="A" />
+                </Character>
+              </Parameter>
+              <Parameter name="parameter" semanticType="Enum">
+                <Character>
+                  <EnumRef name="Example" />
+                </Character>
+              </Parameter>
+              <Parameter name="parameter" semanticType="Enum">
+                <Character>
+                  <EnumRef name="Example" />
+                </Character>
+              </Parameter>
+              <Parameter name="parameter" semanticType="Enum">
+                <Character>
+                  <EnumRef name="Scpi" />
+                </Character>
+              </Parameter>
+              <Parameter name="parameter" semanticType="Enum">
+                <Character>
+                  <EnumRef name="Example" />
+                </Character>
+              </Parameter>
+              <Parameter name="parameter" semanticType="Enum">
+                <Character>
+                  <EnumRef name="Example" />
+                </Character>
+              </Parameter>
+              <Parameter name="parameter" semanticType="Enum">
+                <Character>
+                  <EnumRef name="Example" />
+                </Character>
+              </Parameter>
+              <Parameter name="parameter" semanticType="Enum">
+                <Character>
+                  <EnumRef name="Example" />
+                </Character>
+              </Parameter>
+              <Parameter name="parameter" semanticType="Enum">
+                <Character>
+                  <EnumRef name="Example" />
+                </Character>
+              </Parameter>
+            </Parameters>
+          </CommandSyntax>
+        </CommandSyntaxes>
+        <QuerySyntaxes>
+          <QuerySyntax>
+            <Responses>
+              <Response name="parameter" semanticType="Enum">
+                <Character>
+                  <EnumRef name="A" />
+                </Character>
+              </Response>
+            </Responses>
+          </QuerySyntax>
+        </QuerySyntaxes>
+      </SubsystemCommand>
+    </RootNode>
+    <RootNode mnemonic="APPLy">
+      <Node mnemonic="RAMP">
+        <SubsystemCommand commandForm="CommandOnly">
+          <Synopsis> Output a ramp wave with the specified frequency, amplitude, and dc offset. This command overrides the current symmetry setting and automatically selects 100%. The waveform is output as soon as the command is executed.</Synopsis>
+          <Remarks />
+          <Examples />
+          <CommandSyntaxes>
+            <CommandSyntax>
+              <Parameters>
+                <Parameter name="frequency" semanticType="String" optional="true" />
+                <Parameter name="amplitude" semanticType="Real" optional="true" />
+                <Parameter name="offset" semanticType="Real" optional="true" />
+              </Parameters>
+            </CommandSyntax>
+          </CommandSyntaxes>
+        </SubsystemCommand>
+      </Node>
+    </RootNode>
+    <RootNode mnemonic="CALCulate">
+      <Node mnemonic="FUNCtion">
+        <SubsystemCommand commandForm="CommandAndQuery">
+          <Synopsis>This command selects the calculation function to be used. The default function is NULL.</Synopsis>
+          <Remarks />
+          <Examples>
+            <Example targetCommandForm="CommandOnly">CALC:FUNC DBM
+# An example of SCPI command with Boolean Parameters</Example>
+            <Example targetCommandForm="QueryOnly">CALC:FUNC?</Example>
+          </Examples>
+          <CommandSyntaxes>
+            <CommandSyntax>
+              <Parameters>
+                <Parameter name="parameter" semanticType="Enum">
+                  <Character>
+                    <EnumRef name="NullDbDbmAverLim" />
+                  </Character>
+                </Parameter>
+              </Parameters>
+            </CommandSyntax>
+          </CommandSyntaxes>
+          <QuerySyntaxes>
+            <QuerySyntax>
+              <Responses>
+                <Response name="parameter" semanticType="Enum">
+                  <Character>
+                    <EnumRef name="NullDbDbmAverLim" />
+                  </Character>
+                </Response>
+              </Responses>
+            </QuerySyntax>
+          </QuerySyntaxes>
+        </SubsystemCommand>
+      </Node>
+    </RootNode>
+    <RootNode mnemonic="CALibration">
+      <Node mnemonic="ALL" optional="true">
+        <SubsystemCommand commandForm="QueryOnly">
+          <Synopsis>This command performs a calibration of the multimeter using the specified calibration value (CALibration:VALue command). Before you can calibrate the instrument, you must unsecure it by entering the correct security code.</Synopsis>
+          <Remarks />
+          <Examples>
+            <Example targetCommandForm="QueryOnly">CAL?
+# An example of SCPI command with suffix, suffix is [1|2|3|4].</Example>
+          </Examples>
+          <QuerySyntaxes>
+            <QuerySyntax>
+              <Responses>
+                <Response name="response" semanticType="String" />
+              </Responses>
+            </QuerySyntax>
+          </QuerySyntaxes>
+        </SubsystemCommand>
+      </Node>
+    </RootNode>
+    <RootNode mnemonic="CONFigure">
+      <Node mnemonic="VOLTage" optional="true">
+        <Node mnemonic="AC">
+          <SubsystemCommand commandForm="CommandOnly">
+            <Synopsis>First, this command resets all ac voltage measurement parameters and trigger parameters to their default values. Then, it configures the meter for ac voltage measurements but does not initiate the measurement.</Synopsis>
+            <Remarks />
+            <Examples>
+              <Example targetCommandForm="CommandOnly">CONF:VOLT:AC
+READ?
+# An example of SCPI command with Discrete Parameters</Example>
+            </Examples>
+            <CommandSyntaxes>
+              <CommandSyntax>
+                <Parameters>
+                  <Parameter name="range" semanticType="Enum" optional="true">
+                    <Character>
+                      <EnumRef name="AutoMinMaxDef" />
+                    </Character>
+                  </Parameter>
+                  <Parameter name="resolution" semanticType="ParameterType" optional="true">
+                    <ParameterTypeRef name="MinMaxDef" />
+                  </Parameter>
+                </Parameters>
+              </CommandSyntax>
+            </CommandSyntaxes>
+          </SubsystemCommand>
+        </Node>
+      </Node>
+    </RootNode>
+    <RootNode mnemonic="DATA">
+      <Node mnemonic="COPY">
+        <SubsystemCommand commandForm="CommandOnly">
+          <Synopsis>This command copies the readings in reading memory (RDG_STORE) into non-volatile memory (NVMEM). Non-volatile memory is not erased by a power-down cycle.</Synopsis>
+          <Remarks />
+          <Examples>
+            <Example targetCommandForm="CommandOnly">DATA:COPY NVMEM, RDG_STORE
+# An example of SCPI command with Integer Parameters</Example>
+          </Examples>
+          <CommandSyntaxes>
+            <CommandSyntax>
+              <Parameters>
+                <Parameter name="parameter" semanticType="Enum">
+                  <Character>
+                    <EnumRef name="Nvmem" />
+                  </Character>
+                </Parameter>
+                <Parameter name="parameter" semanticType="Enum">
+                  <Character>
+                    <EnumRef name="Rdg_store" />
+                  </Character>
+                </Parameter>
+              </Parameters>
+            </CommandSyntax>
+          </CommandSyntaxes>
+        </SubsystemCommand>
+      </Node>
+      <Node mnemonic="REMove">
+        <SubsystemCommand commandForm="QueryOnly">
+          <Synopsis>This command reads and erases the specified number of readings from memory. The readings are erased from memory starting with the oldest reading first. The purpose of this command is to allow you to periodically remove readings from memory during a series of measurements to avoid a reading memory overflow.</Synopsis>
+          <Remarks />
+          <Examples>
+            <Example targetCommandForm="QueryOnly">DATA:REM? 3
+# An example of SCPI command with channel list. chanlist, channel, ch_list and scan_list are identic</Example>
+          </Examples>
+          <QuerySyntaxes>
+            <QuerySyntax>
+              <Parameters>
+                <Parameter name="parameter" semanticType="Integer" />
+              </Parameters>
+              <Responses>
+                <Response name="response" semanticType="String" />
+              </Responses>
+            </QuerySyntax>
+          </QuerySyntaxes>
+        </SubsystemCommand>
+      </Node>
+    </RootNode>
+    <RootNode mnemonic="DISPlay">
+      <Node mnemonic="WINDow" optional="true" suffix="1 2">
+        <Node mnemonic="TEXT">
+          <Node mnemonic="DATA" optional="true">
+            <SubsystemCommand commandForm="CommandAndQuery">
+              <Synopsis> This command displays a text message on the top line ("WINDow1") or bottom line ("WINDow2") of the instrument's front-panel display. The top line ("WINDow1") is the default. The instrument can display up to 12 (top line) or 18 (bottom line) characters on the front panel; any additional characters are truncated (no error is generated).</Synopsis>
+              <Remarks />
+              <Examples>
+                <Example targetCommandForm="CommandOnly">DISP:WIND2:TEXT "WAITING FOR DATA..."
+# An example of SCPI command with fixed String Parameters</Example>
+                <Example targetCommandForm="QueryOnly">DISP:WIND2:TEXT?</Example>
+              </Examples>
+              <CommandSyntaxes>
+                <CommandSyntax>
+                  <Parameters>
+                    <Parameter name="parameter" semanticType="String" />
+                  </Parameters>
+                </CommandSyntax>
+              </CommandSyntaxes>
+              <QuerySyntaxes>
+                <QuerySyntax>
+                  <Responses>
+                    <Response name="parameter" semanticType="String" />
+                  </Responses>
+                </QuerySyntax>
+              </QuerySyntaxes>
+            </SubsystemCommand>
+          </Node>
+        </Node>
+      </Node>
+    </RootNode>
+    <RootNode mnemonic="OUTPut">
+      <Node mnemonic="ALARm" suffix="1 2 3 4">
+        <Node mnemonic="CLEar">
+          <SubsystemCommand commandForm="CommandOnly">
+            <Synopsis>Clear the specified alarm output lines.  # An example of SCPI command with suffix, suffix is &lt;1-7&gt;.</Synopsis>
+            <Remarks />
+            <Examples />
+          </SubsystemCommand>
+        </Node>
+      </Node>
+    </RootNode>
+    <RootNode mnemonic="READ">
+      <SubsystemCommand commandForm="QueryOnly">
+        <Synopsis>This command changes the instrument's triggering system from the "idle" state to the "wait-for-trigger" state. Measurements will begin when the specified trigger conditions are satisfied following the receipt of the READ? command. Readings are then sent immediately to volatile memory and the instrument's output buffer.</Synopsis>
+        <Remarks />
+        <Examples>
+          <Example targetCommandForm="QueryOnly">CONF:VOLT:DC 10,0.003
+TRIG:SOUR EXT
+READ?
+# An example of SCPI command with optional keyword.</Example>
+        </Examples>
+        <QuerySyntaxes>
+          <QuerySyntax>
+            <Responses>
+              <Response name="response" semanticType="String" />
+            </Responses>
+          </QuerySyntax>
+        </QuerySyntaxes>
+      </SubsystemCommand>
+    </RootNode>
+    <RootNode mnemonic="SENSe" optional="true">
+      <Node mnemonic="COUNter">
+        <Node mnemonic="TOTalize">
+          <Node mnemonic="IVALue">
+            <SubsystemCommand commandForm="QueryOnly">
+              <Synopsis> The query command returns a numeric value representing the initial counter value of the general purpose digital counter. Multiple responses are separated by comma.  # An example of SCPI command with optional parameters</Synopsis>
+              <Remarks />
+              <Examples />
+              <QuerySyntaxes>
+                <QuerySyntax>
+                  <Parameters>
+                    <Parameter name="ChannelList" semanticType="String">
+                      <Expression>
+                        <ChannelList />
+                      </Expression>
+                    </Parameter>
+                  </Parameters>
+                  <Responses>
+                    <Response name="response" semanticType="String" />
+                  </Responses>
+                </QuerySyntax>
+              </QuerySyntaxes>
+            </SubsystemCommand>
+          </Node>
+        </Node>
+      </Node>
+    </RootNode>
+    <RootNode mnemonic="SOURce" optional="true">
+      <Node mnemonic="DIGital">
+        <Node mnemonic="PIN" suffix="*">
+          <Node mnemonic="FUNCtion">
+            <SubsystemCommand commandForm="CommandAndQuery">
+              <Synopsis> This command sets the functions of the digital port pins.</Synopsis>
+              <Remarks />
+              <Examples>
+                <Example targetCommandForm="CommandOnly">DIG:PIN1:FUNC FAUL
+# An example of SCPI command with suffix, suffix is [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19].</Example>
+                <Example targetCommandForm="QueryOnly">DIG:PIN7:FUNC?</Example>
+              </Examples>
+              <CommandSyntaxes>
+                <CommandSyntax>
+                  <Parameters>
+                    <Parameter name="function" semanticType="Enum">
+                      <Character>
+                        <EnumRef name="DioDinpToutTinpFaulInhOncOffc" />
+                      </Character>
+                    </Parameter>
+                  </Parameters>
+                </CommandSyntax>
+              </CommandSyntaxes>
+              <QuerySyntaxes>
+                <QuerySyntax>
+                  <Responses>
+                    <Response name="function" semanticType="Enum">
+                      <Character>
+                        <EnumRef name="DioDinpToutTinpFaulInhOncOffc" />
+                      </Character>
+                    </Response>
+                  </Responses>
+                </QuerySyntax>
+              </QuerySyntaxes>
+            </SubsystemCommand>
+          </Node>
+        </Node>
+      </Node>
+      <Node mnemonic="MARKer" suffix="0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19">
+        <Node mnemonic="STATe" optional="true">
+          <SubsystemCommand commandForm="CommandAndQuery">
+            <Synopsis> This command turns a marker on or off. Marker 0 is the default if the marker designator [n] is not specified. MARKer has suffix [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]</Synopsis>
+            <Remarks />
+            <Examples>
+              <Example targetCommandForm="CommandOnly">SOURce:MARKer0:STATe ON
+# An example of SCPI command with Numeric Parameters.</Example>
+              <Example targetCommandForm="QueryOnly">SOURce:MARKer0:STATe?</Example>
+            </Examples>
+            <CommandSyntaxes>
+              <CommandSyntax>
+                <Parameters>
+                  <Parameter name="parameter" semanticType="Enum">
+                    <Character>
+                      <EnumRef name="OnOff10" />
+                    </Character>
+                  </Parameter>
+                </Parameters>
+              </CommandSyntax>
+            </CommandSyntaxes>
+            <QuerySyntaxes>
+              <QuerySyntax>
+                <Responses>
+                  <Response name="parameter" semanticType="Enum">
+                    <Character>
+                      <EnumRef name="OnOff10" />
+                    </Character>
+                  </Response>
+                </Responses>
+              </QuerySyntax>
+            </QuerySyntaxes>
+          </SubsystemCommand>
+        </Node>
+      </Node>
+    </RootNode>
+    <RootNode mnemonic="TRIGger">
+      <Node mnemonic="DELay">
+        <Node mnemonic="AUTO">
+          <SubsystemCommand commandForm="CommandAndQuery">
+            <Synopsis>This command disables or enables an automatic trigger delay. If enabled, the instrument determines the delay based on function, range, and integration time or bandwidth.</Synopsis>
+            <Remarks />
+            <Examples>
+              <Example targetCommandForm="CommandOnly">TRIG:DEL:AUTO ON
+# An example of SCPI command with ASCII String Parameters</Example>
+              <Example targetCommandForm="QueryOnly">TRIG:DEL:AUTO?</Example>
+            </Examples>
+            <CommandSyntaxes>
+              <CommandSyntax>
+                <Parameters>
+                  <Parameter name="parameter" semanticType="Enum">
+                    <Character>
+                      <EnumRef name="OnOff10" />
+                    </Character>
+                  </Parameter>
+                </Parameters>
+              </CommandSyntax>
+            </CommandSyntaxes>
+            <QuerySyntaxes>
+              <QuerySyntax>
+                <Responses>
+                  <Response name="parameter" semanticType="Enum">
+                    <Character>
+                      <EnumRef name="OnOff10" />
+                    </Character>
+                  </Response>
+                </Responses>
+              </QuerySyntax>
+            </QuerySyntaxes>
+          </SubsystemCommand>
+        </Node>
+      </Node>
+    </RootNode>
+  </SubsystemCommands>
+</ScpiDefinition>
