@@ -11,7 +11,7 @@ using namespace HZP;
 int main()
 {
     Loger::Init("pub.log", "both");
-    Loger::Write("Publisher address "+FLAGS_zmq_address);
+    Loger::Trace("Publisher address "+FLAGS_zmq_address);
 
     DataPublisher* ptrPublisher = DataPublisher::GetInstance();
 
@@ -22,10 +22,10 @@ int main()
         zmq_sleep(1);
         string msg_data = "ZMQ Num "+to_string(i);
         ptrPublisher->SendMsg((char*)msg_data.c_str(), msg_data.length(), "KKK");
-        Loger::Write("Send Topic Msg:" + msg_data);
+        Loger::Trace("Send Topic Msg:" + msg_data);
 
         ptrPublisher->SendMsg((char*)msg_data.c_str(), msg_data.length(), "Test2");
-        Loger::Write("Send No Topic Msg:" + msg_data);
+        Loger::Trace("Send No Topic Msg:" + msg_data);
         
     }
 

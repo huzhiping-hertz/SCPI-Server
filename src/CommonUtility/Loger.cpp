@@ -38,7 +38,7 @@ void  Loger::Init(string logName, string log) {
 	Logger::root().setChannel(pSplitter);
 }
 
-void Loger::Write(string msg) {
+void Loger::Trace(string msg) {
 	if (FLAGS_log_debug)
 	{
 		Logger& logger = Logger::get("Debug");
@@ -46,7 +46,7 @@ void Loger::Write(string msg) {
 	}
 };
 
-void Loger::WriteError(string msg)
+void Loger::Error(string msg)
 {
 	Logger& logger = Logger::get("Error");
 	logger.information(msg);

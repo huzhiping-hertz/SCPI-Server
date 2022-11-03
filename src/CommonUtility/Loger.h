@@ -30,8 +30,8 @@ namespace HZP
 
 	public:
 		static void Init(string logName, string logType="both");
-		static void Write(string msg);
-		static void WriteError(string msg);
+		static void Trace(string msg);
+		static void Error(string msg);
 	};
 }
 #endif

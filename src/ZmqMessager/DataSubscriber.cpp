@@ -25,7 +25,7 @@ DataSubscriber::DataSubscriber(string topic) {
 	rc = zmq_connect(subscriber, FLAGS_zmq_address.c_str());
 	if (rc != 0)
 	{
-		Loger::Write("!!!Subscriber can not connect to Publisher");
+		Loger::Error("!!!Subscriber can not connect to Publisher");
 	}
 }
 
@@ -48,7 +48,7 @@ int DataSubscriber::GetMsg(char* bufData, int bufLen) {
 		if (msg_size < 0)
 		{
 			int error_code = zmq_errno();
-			Loger::Write("Subscirber Get Msg Error");
+			Loger::Error("Subscirber Get Msg Error");
 		}
 		rslen = msg_size;
 

@@ -24,7 +24,7 @@ DataPublisher::DataPublisher() {
 	int rc = zmq_bind(publisher, FLAGS_zmq_address.c_str());
 	if (rc != 0)
 	{
-		Loger::Write("Can not connected:" + FLAGS_zmq_address);
+		Loger::Trace("Can not connected:" + FLAGS_zmq_address);
 	}
 }
 

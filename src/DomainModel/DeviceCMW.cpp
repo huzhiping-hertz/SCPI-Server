@@ -13,7 +13,7 @@ DeviceCMW::~DeviceCMW()
 }
 CmdResult DeviceCMW::IDN()
 {
-	Loger::Write("IDN");
+	Loger::Trace("IDN");
 	return CmdResult(1,"Rohde&Schwarz CMW");
 }
 CmdResult DeviceCMW::CLS()

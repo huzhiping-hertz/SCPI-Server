@@ -17,10 +17,10 @@ int main()
     while (true)
     {
         int len = subscriber.GetMsg(msg, 1000);
-        Loger::Write("Receive Topic Msg:" + string(msg));
+        Loger::Trace("Receive Topic Msg:" + string(msg));
 
         noTopicSub.GetMsg(nomsg, 1000);
-        Loger::Write("Receive No Topic Msg:" + string(nomsg));
+        Loger::Trace("Receive No Topic Msg:" + string(nomsg));
     }
 
     return 0;

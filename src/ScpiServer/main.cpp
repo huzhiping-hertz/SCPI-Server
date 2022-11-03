@@ -25,9 +25,9 @@ int main(int argc, char* argv[])
 
 
     Loger::Init("scpi.log");
-    Loger::Write("scpi server start...");
-    Loger::Write("scpi server port:"+FLAGS_scpi_server_port);
+    Loger::Trace("scpi server start...");
+    Loger::Trace("scpi server port:"+FLAGS_scpi_server_port);
 
-    Loger::WriteError("xxxxxx");
+    Loger::Error("xxxxxx");
 	return 0; 
 }

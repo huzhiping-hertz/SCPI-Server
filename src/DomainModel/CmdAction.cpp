@@ -10,7 +10,7 @@ CmdAction::CmdAction(string device):m_device(device)
 }
 CmdResult CmdAction::IDN()
 {
-	Loger::Write("Action IDN");
+	Loger::Trace("Action IDN");
 	return this->m_ptrDevice->IDN();
 }
 CmdResult CmdAction::CLS()
