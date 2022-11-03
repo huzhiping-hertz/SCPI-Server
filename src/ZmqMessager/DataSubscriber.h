@@ -3,8 +3,9 @@
 
 #include <string>
 #include "zmq.h"
+#include <gflags/gflags.h>
 
-namespace ZmqMessager {
+namespace HZP {
 
 using namespace std;
 
@@ -14,8 +15,8 @@ private:
   void *ctx;
   void *subscriber;
 public:
-  DataSubscriber();
-  int GetMsg(char *data);
+  DataSubscriber(string topic);
+  int GetMsg(char *bufData,int bufLen);
   ~DataSubscriber();
 };
 } // namespace ZmqMessager

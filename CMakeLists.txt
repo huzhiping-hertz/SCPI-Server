@@ -9,8 +9,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(VCPKG_FEATURE_FLAGS "versions")
 include(c:/work/vcpkg/scripts/buildsystems/vcpkg.cmake)
 
-find_package(czmq CONFIG REQUIRED)
-find_package(cppzmq CONFIG REQUIRED)
+find_package(ZeroMQ CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(gflags CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
@@ -29,6 +28,9 @@ endif()
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/${VERSION})
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/${VERSION})
 
+#拷贝配置文件到bin目录
+file(COPY ${PROJECT_SOURCE_DIR}/config.txt DESTINATION ${PROJECT_SOURCE_DIR}/bin/${VERSION})
+
 #项目头文件
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/src)
 #项目源码
@@ -37,3 +39,4 @@ add_subdirectory(src/DomainModel)
 add_subdirectory(src/CommonUtility)
 add_subdirectory(src/ScpiServer)
 add_subdirectory(src/UnitTest)
+add_subdirectory(src/Examples)

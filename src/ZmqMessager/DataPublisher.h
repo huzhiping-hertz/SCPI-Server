@@ -3,8 +3,9 @@
 
 #include <string>
 #include "zmq.h"
+#include <gflags/gflags.h>
 
-namespace ZmqMessager {
+namespace HZP {
 using namespace std;
 
 class DataPublisher {
@@ -13,12 +14,11 @@ private:
   static DataPublisher *ptrInstance;
   void *ctx;
   void *publisher;
-  zmq_msg_t msg;
   DataPublisher();
 
 public:
   static DataPublisher *GetInstance();
-  void SendMsg(char *data, int length);
+  void SendMsg(char *data, int length, string topic);
   ~DataPublisher();
 };
 

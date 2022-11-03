@@ -10,6 +10,7 @@
 #include "Poco/AutoPtr.h"
 #include "Poco/FormattingChannel.h"
 #include "Poco/PatternFormatter.h"
+#include <gflags/gflags.h>
 
 using namespace std;
 using Poco::Logger;
@@ -28,8 +29,9 @@ namespace HZP
 		Loger() {}
 
 	public:
-		static void Init(string logName, string logType);
+		static void Init(string logName, string logType="both");
 		static void Write(string msg);
+		static void WriteError(string msg);
 	};
 }
 #endif

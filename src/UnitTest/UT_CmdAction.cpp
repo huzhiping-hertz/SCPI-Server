@@ -2,10 +2,11 @@
 #include <catch2/catch_test_macros.hpp>
 #include "DomainModel/CmdAction.h"
 #include <rttr/type>
+#include "gflags/gflags.h"
 
 using namespace HZP;
 using namespace rttr;
-
+DEFINE_bool(log_debug, false, "Debug");
 TEST_CASE("Domain Module Test","[CmdAction]") {
 
     string device = "CMW";

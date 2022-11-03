@@ -2,13 +2,14 @@
 
 using namespace HZP;
 using namespace std;
+DECLARE_bool(log_debug);
 
-void  Loger::Init(string logName, string log = "both") {
+void  Loger::Init(string logName, string log) {
 
 	AutoPtr<SimpleFileChannel> fileChannel(new SimpleFileChannel);
 	fileChannel->setProperty("path", logName);
 	fileChannel->setProperty("rotation", "1000 K");
-
+	
 	AutoPtr<WindowsConsoleChannel> consoleChannel(new WindowsConsoleChannel());
 
 
@@ -38,6 +39,15 @@ void  Loger::Init(string logName, string log = "both") {
 }
 
 void Loger::Write(string msg) {
-	Logger& logger = Logger::get("ScpiLog");
-	logger.information(msg);
+	if (FLAGS_log_debug)
+	{
+		Logger& logger = Logger::get("Debug");
+		logger.information(msg);
+	}
 };
+
+void Loger::WriteError(string msg)
+{
+	Logger& logger = Logger::get("Error");
+	logger.information(msg);
+}
